@@ -22,7 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.time.DayOfWeek;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Executors;
@@ -41,9 +41,9 @@ public class UsageDataCollectorScheduler {
     // Day of week to run
     private static final DayOfWeek SCHEDULED_DAY = DayOfWeek.WEDNESDAY;
     // Hour (0-23) in UTC
-    private static final int SCHEDULED_HOUR_UTC = 2;
+    private static final int SCHEDULED_HOUR = 2;
     // Minute (0-59)
-    private static final int SCHEDULED_MINUTE_UTC = 30;
+    private static final int SCHEDULED_MINUTE = 30;
 
     private ScheduledExecutorService scheduler;
     private ScheduledFuture<?> scheduledTask;
@@ -59,6 +59,12 @@ public class UsageDataCollectorScheduler {
      */
     public void startScheduledTask() {
 
+        if (scheduler != null && !scheduler.isShutdown()) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Scheduler already started; skipping re-start");
+            }
+            return;
+        }
         // Create scheduler with daemon thread
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread thread = new Thread(r, "IS-UsageDataCollector-Thread");
@@ -86,13 +92,14 @@ public class UsageDataCollectorScheduler {
      */
     private long calculateInitialDelay() {
 
-        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+        ZoneId localZone = ZoneId.systemDefault();
+        ZonedDateTime now = ZonedDateTime.now(localZone);
 
         // Set target day and time
         ZonedDateTime nextRun = now
                 .with(SCHEDULED_DAY)
-                .withHour(SCHEDULED_HOUR_UTC)
-                .withMinute(SCHEDULED_MINUTE_UTC)
+                .withHour(SCHEDULED_HOUR)
+                .withMinute(SCHEDULED_MINUTE)
                 .withSecond(0)
                 .withNano(0);
 

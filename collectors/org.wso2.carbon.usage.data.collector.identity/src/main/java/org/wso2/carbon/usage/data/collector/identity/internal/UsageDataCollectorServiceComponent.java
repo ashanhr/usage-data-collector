@@ -130,7 +130,13 @@ public class UsageDataCollectorServiceComponent {
 
         // Stop scheduler
         if (schedulerNew != null) {
-            schedulerNew.stopScheduledTask();
+            try {
+                schedulerNew.stopScheduledTask();
+            } catch (RuntimeException e) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Error while stopping UsageDataCollectorScheduler", e);
+                }
+            }
         }
 
         if (publisherServiceRegistration != null) {

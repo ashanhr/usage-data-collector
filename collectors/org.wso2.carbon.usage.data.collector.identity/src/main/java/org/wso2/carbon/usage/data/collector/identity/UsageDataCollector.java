@@ -169,6 +169,12 @@ public class UsageDataCollector {
 
     private void publishMetric(int count, String type) {
 
+        if (!MetaInfoHolder.isInitialized()) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Skipping metric publish: MetaInfoHolder is not initialized");
+            }
+            return;
+        }
         String nodeId = MetaInfoHolder.getNodeId();
         String product = MetaInfoHolder.getProduct();
         UsageCount data = new UsageCount(nodeId, product, count, type);

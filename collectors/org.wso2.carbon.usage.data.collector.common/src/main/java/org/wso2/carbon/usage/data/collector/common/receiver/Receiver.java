@@ -51,7 +51,7 @@ import org.wso2.carbon.usage.data.collector.common.publisher.api.model.MetaInfor
  *
  * <p><b>Collector Side:</b></p>
  * <pre>{@code
- * @Reference(cardinality = ReferenceCardinality.OPTIONAL)
+ * @Reference(cardinality = ReferenceCardinality.MANDATORY)
  * private volatile Receiver receiver;
  *
  * public void publish(UsageCount count) {

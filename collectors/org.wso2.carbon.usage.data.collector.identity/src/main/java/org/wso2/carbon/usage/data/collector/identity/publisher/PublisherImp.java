@@ -22,7 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.identity.core.util.IdentityDatabaseUtil;
 import org.wso2.carbon.usage.data.collector.common.publisher.api.Publisher;
-import org.wso2.carbon.usage.data.collector.common.publisher.api.PublisherException;
 import org.wso2.carbon.usage.data.collector.common.publisher.api.model.*;
 import org.wso2.carbon.usage.data.collector.common.receiver.Receiver;
 import org.wso2.carbon.usage.data.collector.identity.internal.UsageDataCollectorDataHolder;
@@ -65,21 +64,28 @@ public class PublisherImp implements Publisher {
             } else if (data instanceof MetaInformation) {
                 receiver.processMetaInformationData((MetaInformation) data);
             } else {
-                throw new PublisherException("Unsupported data type: " + data.getClass().getSimpleName());
+                return ApiResponse.failure(400, "Unsupported data type");
             }
             return ApiResponse.success(200, "Success");
         } catch (Exception e) {
-            return ApiResponse.failure(500, e.getMessage());
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Receiver API call failed", e);
+            }
+            return ApiResponse.failure(500, "Receiver API call failed");
         }
     }
 
     @Override
-    public ApiResponse callExternalApi(ApiRequest request) throws PublisherException {
+    public ApiResponse callExternalApi(ApiRequest request) {
+
+        if (request == null || request.getEndpoint() == null || request.getEndpoint().trim().isEmpty()) {
+            return ApiResponse.failure(400, "Invalid request");
+        }
 
         try {
             return new HTTPClient().sendHttpRequest(request.getEndpoint(), request);
         } catch (IOException e) {
-            String errorMsg = "WSO2 API call failed: " + e.getMessage();
+            String errorMsg = "External API call failed";
             if (LOG.isDebugEnabled()) {
                 LOG.debug(errorMsg, e);
             }

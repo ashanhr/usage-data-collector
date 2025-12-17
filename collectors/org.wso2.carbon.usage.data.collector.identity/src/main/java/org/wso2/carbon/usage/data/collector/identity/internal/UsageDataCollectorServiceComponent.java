@@ -56,8 +56,6 @@ public class UsageDataCollectorServiceComponent {
 
     private static final Log LOG = LogFactory.getLog(UsageDataCollectorServiceComponent.class);
 
-    private static final long INITIAL_DELAY_SECONDS = 30;
-    private static final long INTERVAL_SECONDS = 60;
     private static final long SHUTDOWN_TIMEOUT_SECONDS = 10;
     private final AtomicBoolean hasRunUsageCollection = new AtomicBoolean(false);
 
@@ -255,18 +253,6 @@ public class UsageDataCollectorServiceComponent {
 
     private void runUsageCollectionTask() {
 
-//        scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
-//            Thread thread = new Thread(r, "IS-UsageDataCollector-Thread");
-//            thread.setDaemon(true);
-//            return thread;
-//        });
-//
-//        scheduledTask = scheduler.scheduleAtFixedRate(
-//                new UsageDataCollectorTask(collectorService),
-//                INITIAL_DELAY_SECONDS,
-//                INTERVAL_SECONDS,
-//                TimeUnit.SECONDS
-//        );
         schedulerNew = new UsageDataCollectorScheduler(collectorService);
         schedulerNew.startScheduledTask();
     }

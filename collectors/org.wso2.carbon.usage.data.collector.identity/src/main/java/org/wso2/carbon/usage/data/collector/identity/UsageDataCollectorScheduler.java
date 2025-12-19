@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.usage.data.collector.identity;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
@@ -39,7 +40,7 @@ public class UsageDataCollectorScheduler {
     private static final Log LOG = LogFactory.getLog(UsageDataCollectorScheduler.class);
 
     // Default Configuration (Time based Mode)
-    private static final DayOfWeek DEFAULT_SCHEDULED_DAY = DayOfWeek.SUNDAY;
+    private static final DayOfWeek DEFAULT_SCHEDULED_DAY = DayOfWeek.WEDNESDAY;
     private static final int DEFAULT_SCHEDULED_HOUR = 2;  // Hour (0-23)
     private static final int DEFAULT_SCHEDULED_MINUTE = 0; // Minute (0-59)
 
@@ -234,7 +235,8 @@ public class UsageDataCollectorScheduler {
      * Parse DayOfWeek from string
      */
     private DayOfWeek parseDayOfWeek(String value, DayOfWeek defaultValue) {
-        if (value == null || value.trim().isEmpty()) {
+
+        if (StringUtils.isBlank(value)) {
             return defaultValue;
         }
 
@@ -253,7 +255,7 @@ public class UsageDataCollectorScheduler {
      */
     private int parseInt(String value, int defaultValue, String propertyType) {
 
-        if (value == null || value.trim().isEmpty()) {
+        if (StringUtils.isBlank(value)) {
             return defaultValue;
         }
 
@@ -290,7 +292,8 @@ public class UsageDataCollectorScheduler {
      * Parse long from string
      */
     private long parseLong(String value, long defaultValue) {
-        if (value == null || value.trim().isEmpty()) {
+
+        if (StringUtils.isBlank(value)) {
             return defaultValue;
         }
 

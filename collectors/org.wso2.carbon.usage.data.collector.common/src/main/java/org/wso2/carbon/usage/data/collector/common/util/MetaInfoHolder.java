@@ -50,6 +50,8 @@ public class MetaInfoHolder {
 
     /**
      * Gets the cached node ID (IP address).
+     *
+     * @return the node ID
      */
     public static String getNodeId() {
         return nodeId;
@@ -57,6 +59,8 @@ public class MetaInfoHolder {
 
     /**
      * Gets the cached product name and version.
+     *
+     * @return the product name and version
      */
     public static String getProduct() {
         return product;
@@ -64,6 +68,8 @@ public class MetaInfoHolder {
 
     /**
      * Checks if meta information has been initialized.
+     *
+     * @return true if meta information has been initialized, false otherwise
      */
     public static boolean isInitialized() {
         return initialized;

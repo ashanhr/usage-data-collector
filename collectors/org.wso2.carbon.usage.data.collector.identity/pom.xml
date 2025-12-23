@@ -29,11 +29,41 @@
     <name>WSO2 Carbon - Identity Server Usage Data Collector</name>
     <description>Usage Data Collector for Identity Server with scheduler and utility code</description>
 
+    <scm>
+        <url>https://github.com/wso2/usage-data-collector</url>
+        <developerConnection>scm:git:https://github.com/wso2/usage-data-collector.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/usage-data-collector.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+        </repository>
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>https://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.usage.data.collector.common</artifactId>
-            <version>${project.version}</version>
+            <version>${collector.common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.osgi</groupId>
@@ -180,10 +210,10 @@
                             org.wso2.carbon.identity.organization.management.service; version="${org.wso2.carbon.identity.organization.management.core.version.range}",
 
                             <!-- Usage Data Collector Common -->
-                            org.wso2.carbon.usage.data.collector.common.publisher.api; version="${project.version}",
-                            org.wso2.carbon.usage.data.collector.common.publisher.api.model; version="${project.version}",
-                            org.wso2.carbon.usage.data.collector.common.receiver; version="${project.version}",
-                            org.wso2.carbon.usage.data.collector.common.util; version="${project.version}",
+                            org.wso2.carbon.usage.data.collector.common.publisher.api; version="${collector.common.version.range}",
+                            org.wso2.carbon.usage.data.collector.common.publisher.api.model; version="${collector.common.version.range}",
+                            org.wso2.carbon.usage.data.collector.common.receiver; version="${collector.common.version.range}",
+                            org.wso2.carbon.usage.data.collector.common.util; version="${collector.common.version.range}",
                         </Import-Package>
                     </instructions>
                 </configuration>
@@ -242,28 +272,8 @@
         <httpcomponents-httpcore.wso2.osgi.version.range>[4.4.0, 5.0.0)</httpcomponents-httpcore.wso2.osgi.version.range>
         <org.wso2.carbon.identity.organization.management.core.version.range>[1.0.0, 2.0.0)</org.wso2.carbon.identity.organization.management.core.version.range>
         <httpclient.version>4.5.13</httpclient.version>
+        <project.scm.id>my-scm-server</project.scm.id>
+        <collector.common.version>1.0.1</collector.common.version>
+        <collector.common.version.range>[1.0.0, 2.0.0)</collector.common.version.range>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>wso2-nexus</id>
-            <name>WSO2 internal Repository</name>
-            <url>https://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </releases>
-        </repository>
-        <repository>
-            <id>wso2.releases</id>
-            <name>WSO2 internal Repository</name>
-            <url>https://maven.wso2.org/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </releases>
-        </repository>
-    </repositories>
 </project>

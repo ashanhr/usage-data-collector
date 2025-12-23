@@ -62,6 +62,8 @@ public class UsageDataCollectorServiceComponent {
 
     /**
      * Bind the Publisher.
+     *
+     * @param service the publisher service to set
      */
     @Reference(
         name = "publisher",
@@ -76,6 +78,8 @@ public class UsageDataCollectorServiceComponent {
 
     /**
      * Unbind the Publisher.
+     *
+     * @param service the publisher service to unset
      */
     protected void unsetPublisher(Publisher service) {
         this.publisher = null;

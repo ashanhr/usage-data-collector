@@ -41,7 +41,7 @@ import org.wso2.carbon.usage.data.collector.common.publisher.api.model.MetaInfor
  * <h3>Implementation Pattern:</h3>
  * <p><b>Receiver Side:</b></p>
  * <pre>{@code
- * @Component(service = Receiver.class, immediate = true)
+ * &#64;Component(service = Receiver.class, immediate = true)
  * public class UsageDataReceiver implements Receiver {
  *     public void processUsageData(UsageCount count) {
  *         storageService.save(count);
@@ -51,7 +51,7 @@ import org.wso2.carbon.usage.data.collector.common.publisher.api.model.MetaInfor
  *
  * <p><b>Collector Side:</b></p>
  * <pre>{@code
- * @Reference(cardinality = ReferenceCardinality.MANDATORY)
+ * &#64;Reference(cardinality = ReferenceCardinality.MANDATORY)
  * private volatile Receiver receiver;
  *
  * public void publish(UsageCount count) {
